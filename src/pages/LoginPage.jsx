@@ -1,10 +1,19 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 
 const LoginPage = () => {
-  const handleGoogleSignIn = () => {
-    // TODO: Implement Google Sign In logic
-    console.log('Google Sign In clicked');
+  const { signInWithGoogle, error } = useAuth();
+  const navigate = useNavigate();
+
+  const handleGoogleSignIn = async () => {
+    try {
+      await signInWithGoogle();
+      navigate('/dashboard'); // Redirect to dashboard after successful login
+    } catch (error) {
+      // Error will be handled by the AuthContext
+      console.error("Error signing in:", error);
+    }
   };
 
   return (
@@ -53,6 +62,12 @@ const LoginPage = () => {
         <p className="mb-6 text-gray-600">
           Sign in to continue to the application
         </p>
+
+        {error && (
+          <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-md">
+            {error}
+          </div>
+        )}
 
         {/* Google Sign In Button */}
         <button
