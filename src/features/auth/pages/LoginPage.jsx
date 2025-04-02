@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
-import { useAuth } from '../../../contexts/AuthContext';
-import { getAuthErrorMessage } from '../../../utils/firebaseErrors';
-import ProfileCompletionPrompt from '../../../components/onboarding/ProfileCompletionPrompt';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useAuth } from "../../../contexts/AuthContext";
+import { getAuthErrorMessage } from "../../../utils/firebaseErrors";
+import ProfileCompletionPrompt from "../../../components/onboarding/ProfileCompletionPrompt";
 
 const LoginPage = () => {
   const [loading, setLoading] = useState(false);
@@ -17,15 +17,15 @@ const LoginPage = () => {
       setLoading(true);
       setError(null);
       const { user, isNewUser } = await signInWithGoogle();
-      
+
       // Show profile completion prompt for new student users
-      if (isNewUser && user.role === 'student' && !user.isProfileComplete) {
+      if (isNewUser && user.role === "student" && !user.isProfileComplete) {
         setShowProfilePrompt(true);
         return;
       }
-      
+
       // Otherwise just navigate to dashboard
-      navigate('/dashboard');
+      navigate("/dashboard");
     } catch (err) {
       console.error("Error signing in with Google:", err);
       setError(getAuthErrorMessage(err) || "Failed to sign in with Google");
@@ -38,58 +38,70 @@ const LoginPage = () => {
   const handleProfileComplete = (profileData) => {
     console.log("Profile completed:", profileData);
     setShowProfilePrompt(false);
-    navigate('/dashboard');
+    navigate("/dashboard");
   };
 
   return (
-    <div className="min-h-screen flex relative">
-      {/* Hash pattern background */}
-      <div 
-        className="fixed inset-0 opacity-[0.15]"
+    <div className="min-h-screen flex items-center justify-center relative bg-gradient-to-br from-blue-50 to-indigo-50">
+      {/* Hash pattern background - increased opacity and adjusted properties */}
+      <div
+        className="fixed inset-0 opacity-[0.2]"
         style={{
-          backgroundImage: 'url(https://ibpublicimages.s3.us-west-2.amazonaws.com/scaler-landing/hash.svg)',
-          backgroundRepeat: 'repeat',
-          backgroundSize: '400px',
-          transform: 'rotate(-10deg)',
-          backgroundPosition: 'center',
-          pointerEvents: 'none',
-          zIndex: 1
+          backgroundImage:
+            "url(https://ibpublicimages.s3.us-west-2.amazonaws.com/scaler-landing/hash.svg)",
+          backgroundRepeat: "repeat",
+          backgroundSize: "300px",
+          transform: "rotate(-5deg)",
+          backgroundPosition: "center",
+          pointerEvents: "none",
+          zIndex: 1,
+          filter: "contrast(1.2)",
         }}
       />
-      
-      {/* Create Impact background */}
-      <div 
+
+      {/* Subtle pattern overlay */}
+      <div className="fixed inset-0 opacity-10 z-0 bg-[radial-gradient(#3b82f6_1px,transparent_1px)] bg-[length:20px_20px]"></div>
+
+      {/* Animated gradient blob */}
+      <div className="fixed -bottom-32 -left-40 w-80 h-80 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+      <div className="fixed top-0 -right-20 w-80 h-80 bg-yellow-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+      <div className="fixed -bottom-40 right-20 w-80 h-80 bg-pink-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
+
+      {/* Stairs background */}
+      <div
         className="fixed inset-0 z-0"
         style={{
-          backgroundImage: 'url(https://ibpublicimages.s3.us-west-2.amazonaws.com/scaler-landing/create-impact.webp)',
-          backgroundSize: '80%',
-          backgroundRepeat: 'no-repeat',
-          backgroundPosition: 'bottom right -300px',
-          opacity: 0.15,
-          pointerEvents: 'none'
+          backgroundImage:
+            "url(https://ibpublicimages.s3.us-west-2.amazonaws.com/scaler-landing/create-impact.webp)",
+          backgroundSize: "clamp(70%, 80%, 90%)",
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "bottom right -300px",
+          opacity: 0.12,
+          pointerEvents: "none",
+          filter: "contrast(1.1)",
         }}
       />
 
       {/* Login Container */}
-      <div className="relative z-10 bg-[#f5f5f5]/90 backdrop-blur-sm p-8 rounded-3xl shadow-[0_8px_30px_rgba(0,0,0,0.12)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)] transition-all duration-300 w-full max-w-[400px] text-center border border-blue-100/10">
-        <div className="inline-block w-[150px] h-[150px] overflow-hidden rounded-[10px] mb-6">
+      <div className="relative z-10 bg-white/95 backdrop-blur-md p-6 sm:p-10 rounded-2xl shadow-[0_10px_60px_rgba(8,_112,_184,_0.25)] w-full max-w-[440px] mx-auto text-center border border-blue-100/20 transition-all duration-300 hover:shadow-[0_15px_70px_rgba(8,_112,_184,_0.3)]">
+        <div className="inline-block w-[120px] h-[120px] overflow-hidden rounded-2xl mb-6 shadow-md">
           <img
             src="https://media.licdn.com/dms/image/v2/D560BAQE_KykOv-R26Q/company-logo_200_200/company-logo_200_200/0/1680526828612/scaler_school_of_technology_logo?e=2147483647&v=beta&t=ErZSckCyUo-j4_ZwBwkBvdpuP8N7nT8L2O7wPvwA0GY"
             alt="Company Logo"
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-300"
           />
         </div>
 
-        <h1 className="text-[1.875rem] font-bold text-gray-900 mb-3">
-          Welcome
+        <h1 className="text-2xl font-bold text-gray-900 mb-2">
+          Welcome Back
         </h1>
 
-        <p className="mb-6 text-gray-600">
-          Sign in to continue to the application
+        <p className="mb-8 text-gray-600 text-sm">
+          Sign in to continue to the Issue Tracker system
         </p>
 
         {error && (
-          <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-md">
+          <div className="mb-6 p-3 bg-red-50 text-red-700 rounded-lg border border-red-100 text-sm">
             {error}
           </div>
         )}
@@ -98,39 +110,40 @@ const LoginPage = () => {
         <button
           onClick={handleGoogleSignIn}
           disabled={loading}
-          className="w-full flex items-center justify-center gap-2 bg-white text-gray-700 border border-gray-300 rounded-md px-4 py-2 hover:bg-gray-50 transition-colors duration-200 mb-4"
+          className="w-full flex items-center justify-center gap-3 bg-white text-gray-700 border border-gray-300 rounded-xl px-5 py-3 hover:bg-gray-50 hover:border-gray-400 transition-colors duration-300 shadow-sm mb-6 group"
         >
-          <img 
-            src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" 
-            alt="Google logo" 
+          <img
+            src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+            alt="Google logo"
             className="w-5 h-5"
           />
-          {loading ? 'Signing in...' : 'Sign in with Google'}
+          <span className="font-medium">
+            {loading ? "Signing in..." : "Sign in with Google"}
+          </span>
+          <span className="ml-1 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-200">→</span>
         </button>
 
-        {/* Email/Password Form */}
-        <div className="mt-6">
-          <div className="relative">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-300"></div>
-            </div>
-            <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-[#f5f5f5] text-gray-500">Or continue with email</span>
-            </div>
-          </div>
-          
-          {/* Import your LoginForm component here */}
-          <div className="mt-6">
-            {/* Include your existing LoginForm component */}
-          </div>
-        </div>
-
-        <p className="mt-8 text-sm text-gray-500">
-          By continuing, you agree to our{' '}
-          <Link to="/terms" className="text-[#2563EB] hover:text-[#1d4ed8] hover:underline">Terms of service</Link>{' '}
-          and{' '}
-          <Link to="/privacy" className="text-[#2563EB] hover:text-[#1d4ed8] hover:underline">Privacy policy</Link>
+        <p className="mt-8 text-xs text-gray-500">
+          By continuing, you agree to our{" "}
+          <Link
+            to="/terms"
+            className="text-blue-600 hover:text-blue-800 hover:underline font-medium"
+          >
+            Terms of service
+          </Link>{" "}
+          and{" "}
+          <Link
+            to="/privacy"
+            className="text-blue-600 hover:text-blue-800 hover:underline font-medium"
+          >
+            Privacy policy
+          </Link>
         </p>
+        
+        {/* Version tag */}
+        <div className="absolute bottom-3 right-3 text-[10px] text-gray-400">
+          v1.0.0
+        </div>
       </div>
 
       {/* Profile Completion Prompt */}

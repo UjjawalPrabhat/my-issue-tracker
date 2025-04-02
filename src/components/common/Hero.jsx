@@ -1,59 +1,62 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Hero = () => {
+  const navigate = useNavigate();
+
   return (
-    <div className="relative py-16 md:py-24 overflow-hidden">
-      {/* Hero content */}
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center md:max-w-3xl mx-auto">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 mb-6">
-            Campus Issue <span className="text-blue-600">Tracker</span>
-          </h1>
-          
-          <p className="text-xl md:text-2xl text-gray-600 mb-10">
-            Seamlessly report and track campus maintenance issues, technical problems, 
-            and administrative requests all in one place.
-          </p>
-          
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              to="/login"
-              className="px-8 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors duration-200"
-            >
-              Get Started
-            </Link>
-            
-            <Link
-              to="#features"
-              className="px-8 py-3 bg-white text-blue-600 font-medium rounded-lg border border-blue-200 hover:bg-blue-50 transition-colors duration-200"
-            >
-              Learn More
-            </Link>
-          </div>
-          
-          <div className="mt-16">
-            <p className="text-sm text-gray-500 font-medium uppercase tracking-wide mb-3">
-              Trusted by
-            </p>
-            <div className="flex flex-wrap justify-center gap-x-12 gap-y-6">
-              <span className="text-gray-400 text-lg font-semibold">University Housing</span>
-              <span className="text-gray-400 text-lg font-semibold">IT Department</span>
-              <span className="text-gray-400 text-lg font-semibold">Student Services</span>
-              <span className="text-gray-400 text-lg font-semibold">Facilities Management</span>
+    <div className="relative z-10 pt-14 pb-16 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto relative">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+          {/* Video Section */}
+          <div className="relative aspect-video bg-white/80 backdrop-blur-sm rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.12)] transition-shadow duration-300 flex items-center justify-center overflow-hidden transform hover:-translate-y-1">
+            <div className="absolute inset-0 bg-gray-900/5"></div>
+            <div className="text-center">
+              <svg 
+                className="w-16 h-16 mb-4 mx-auto text-gray-400"
+                fill="none" 
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  strokeWidth={1.5} 
+                  d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" 
+                />
+                <path 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  strokeWidth={1.5} 
+                  d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" 
+                />
+              </svg>
+              <p className="text-xl font-medium text-gray-600">Video Coming Soon</p>
             </div>
           </div>
-        </div>
-      </div>
-      
-      {/* Hero image/illustration (optional) */}
-      <div className="mt-16 flex justify-center">
-        <div className="w-full max-w-4xl rounded-lg shadow-xl overflow-hidden">
-          <img
-            src="https://images.unsplash.com/photo-1531482615713-2afd69097998?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80"
-            alt="Issue tracking dashboard"
-            className="w-full h-auto"
-          />
+
+          {/* Content Section */}
+          <div className="space-y-6 bg-white/90 backdrop-blur-sm p-8 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.12)] transition-all duration-300 transform hover:-translate-y-1">
+            <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 leading-tight">
+              Campus Issue Tracker
+            </h1>
+            <p className="text-xl text-gray-600 leading-relaxed">
+              A comprehensive platform designed to streamline the process of reporting and resolving campus-related issues. 
+              With real-time tracking, automated notifications, and an intuitive interface, we make campus maintenance 
+              efficient and transparent.
+            </p>
+            <div className="space-x-4">
+              <button 
+                onClick={() => navigate('/login')}
+                className="bg-[#2563EB] text-white px-6 py-3 rounded-lg hover:bg-[#1d4ed8] transition-colors duration-300"
+              >
+                Get Started
+              </button>
+              <button className="text-[#111827] border-2 border-[#111827] px-6 py-3 rounded-lg hover:bg-gray-50 transition-colors duration-300">
+                Learn More
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>

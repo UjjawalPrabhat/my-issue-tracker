@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import NavLink from '../navigation/NavLink';
+import Logo from '../common/Logo';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -17,13 +18,10 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-white border-b border-gray-100 py-4 px-6 md:px-10">
+    <nav className="bg-white border-b border-gray-100 py-4 px-6 md:px-10 shadow-lg shadow-blue-100/50">
       <div className="max-w-7xl mx-auto flex justify-between items-center">
         {/* Logo */}
-        <Link to="/" className="flex items-center">
-          <span className="text-xl font-semibold text-blue-600">Campus</span>
-          <span className="text-xl font-semibold text-gray-900">Issue</span>
-        </Link>
+        <Logo/>
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center space-x-8">
