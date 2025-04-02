@@ -12,7 +12,7 @@ const Hero = () => {
           <div className="relative aspect-video bg-white/80 backdrop-blur-sm rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.12)] transition-shadow duration-300 flex items-center justify-center overflow-hidden transform hover:-translate-y-1">
             <div className="absolute inset-0 bg-gray-900/5"></div>
             <div className="text-center">
-              <svg 
+              <svg // vector icon
                 className="w-16 h-16 mb-4 mx-auto text-gray-400"
                 fill="none" 
                 viewBox="0 0 24 24"

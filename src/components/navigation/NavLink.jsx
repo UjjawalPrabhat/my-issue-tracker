@@ -1,23 +1,19 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation } from 'react-router-dom';
 
-const NavLink = ({ to, children, className = "" }) => {
+const NavLink = ({ to, children, className = '', ...props }) => {
   const location = useLocation();
-  const isActive = location.pathname === to;
-  const isLoginButton = to === '/login';
-
+  const isActive = location.pathname === to || location.hash === to;
+  
   return (
     <Link
       to={to}
       className={`
-        transition-all duration-300 text-[15px] font-medium relative
-        ${isLoginButton 
-          ? "bg-[#2563EB] text-white px-5 py-2 rounded-lg hover:bg-[#1d4ed8]" 
-          : isActive 
-            ? "bg-[#2563EB] text-white px-5 py-2 rounded-lg"
-            : "text-[#445781] hover:text-[#111827] px-3 py-2 hover:bg-gray-50 rounded-lg"
-        } 
+        text-base font-medium 
+        ${isActive ? 'text-blue-600' : 'text-gray-600 hover:text-gray-900'} 
+        transition-colors duration-200
         ${className}
       `}
+      {...props}
     >
       {children}
     </Link>

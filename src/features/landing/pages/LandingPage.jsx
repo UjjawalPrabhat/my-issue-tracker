@@ -1,7 +1,7 @@
 import React from 'react';
-import Navbar from '../components/Navbar';
-import Hero from '../components/Hero';
-import Footer from '../components/Footer';
+import Navbar from '../../../components/layout/Navbar';
+import Hero from '../../../components/common/Hero';
+import Footer from '../../../components/layout/Footer';
 
 const LandingPage = () => {
   return (

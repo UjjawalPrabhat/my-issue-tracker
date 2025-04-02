@@ -1,0 +1,68 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isAdmin() {
+      return isAuthenticated() && 
+        (request.auth.token.email == 'iamujjawal4u@gmail.com' || 
+         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin');
+    }
+    
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+    
+    // Users collection
+    match /users/{userId} {
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated() && request.auth.uid == userId;
+      allow update: if isOwner(userId) || isAdmin();
+      allow delete: if isAdmin();
+    }
+    
+    // Issues collection
+    match /issues/{issueId} {
+      allow read: if isAuthenticated();
+      // Allow students to create their own issues
+      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
+      allow update: if isAuthenticated() && (
+        isOwner(resource.data.userId) || isAdmin()
+      );
+      allow delete: if isAdmin();
+      
+      // Allow access to comments subcollection
+      match /comments/{commentId} {
+        allow read: if isAuthenticated();
+        allow create: if isAuthenticated();
+        allow update, delete: if isAdmin() || isOwner(resource.data.userId);
+      }
+    }
+    
+    // Notifications collection
+    match /notifications/{notificationId} {
+      allow read: if isAuthenticated() && (
+        // Allow users to read notifications targeted to them
+        (request.auth.uid in resource.data.audience) || 
+        ('admin' in resource.data.audience && isAdmin()) || 
+        ('student' in resource.data.audience)
+      );
+      // Allow anyone to create notifications (system, students, admins)
+      allow create: if isAuthenticated();
+      // Only allow updating own notifications (for marking as read)
+      allow update: if isAuthenticated() && (
+        isAdmin() || request.auth.uid in resource.data.audience
+      );
+      allow delete: if isAdmin();
+    }
+    
+    // Settings collection
+    match /settings/{settingId} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin();
+    }
+  }
+}

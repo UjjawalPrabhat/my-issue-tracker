@@ -1,23 +1,48 @@
-import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { useAuth } from '../../../contexts/AuthContext';
+import { getAuthErrorMessage } from '../../../utils/firebaseErrors';
+import ProfileCompletionPrompt from '../../../components/onboarding/ProfileCompletionPrompt';
 
 const LoginPage = () => {
-  const { signInWithGoogle, error } = useAuth();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [showProfilePrompt, setShowProfilePrompt] = useState(false);
+  const { login, signInWithGoogle } = useAuth();
   const navigate = useNavigate();
 
   const handleGoogleSignIn = async () => {
     try {
-      await signInWithGoogle();
-      navigate('/dashboard'); // Redirect to dashboard after successful login
-    } catch (error) {
-      // Error will be handled by the AuthContext
-      console.error("Error signing in:", error);
+      setLoading(true);
+      setError(null);
+      const { user, isNewUser } = await signInWithGoogle();
+      
+      // Show profile completion prompt for new student users
+      if (isNewUser && user.role === 'student' && !user.isProfileComplete) {
+        setShowProfilePrompt(true);
+        return;
+      }
+      
+      // Otherwise just navigate to dashboard
+      navigate('/dashboard');
+    } catch (err) {
+      console.error("Error signing in with Google:", err);
+      setError(getAuthErrorMessage(err) || "Failed to sign in with Google");
+    } finally {
+      setLoading(false);
     }
   };
 
+  // Handle profile completion
+  const handleProfileComplete = (profileData) => {
+    console.log("Profile completed:", profileData);
+    setShowProfilePrompt(false);
+    navigate('/dashboard');
+  };
+
   return (
-    <div className="min-h-screen bg-white relative overflow-hidden flex items-center justify-center p-4">
+    <div className="min-h-screen flex relative">
       {/* Hash pattern background */}
       <div 
         className="fixed inset-0 opacity-[0.15]"
@@ -39,7 +64,7 @@ const LoginPage = () => {
           backgroundImage: 'url(https://ibpublicimages.s3.us-west-2.amazonaws.com/scaler-landing/create-impact.webp)',
           backgroundSize: '80%',
           backgroundRepeat: 'no-repeat',
-          backgroundPosition: 'bottom right -300px', // Changed from -200px to -300px
+          backgroundPosition: 'bottom right -300px',
           opacity: 0.15,
           pointerEvents: 'none'
         }}
@@ -72,15 +97,33 @@ const LoginPage = () => {
         {/* Google Sign In Button */}
         <button
           onClick={handleGoogleSignIn}
-          className="w-full flex items-center justify-center gap-2 bg-white text-gray-700 border border-gray-300 rounded-md px-4 py-2 hover:bg-gray-50 transition-colors duration-200"
+          disabled={loading}
+          className="w-full flex items-center justify-center gap-2 bg-white text-gray-700 border border-gray-300 rounded-md px-4 py-2 hover:bg-gray-50 transition-colors duration-200 mb-4"
         >
           <img 
             src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" 
             alt="Google logo" 
             className="w-5 h-5"
           />
-          Sign in with Google
+          {loading ? 'Signing in...' : 'Sign in with Google'}
         </button>
+
+        {/* Email/Password Form */}
+        <div className="mt-6">
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-gray-300"></div>
+            </div>
+            <div className="relative flex justify-center text-sm">
+              <span className="px-2 bg-[#f5f5f5] text-gray-500">Or continue with email</span>
+            </div>
+          </div>
+          
+          {/* Import your LoginForm component here */}
+          <div className="mt-6">
+            {/* Include your existing LoginForm component */}
+          </div>
+        </div>
 
         <p className="mt-8 text-sm text-gray-500">
           By continuing, you agree to our{' '}
@@ -89,6 +132,11 @@ const LoginPage = () => {
           <Link to="/privacy" className="text-[#2563EB] hover:text-[#1d4ed8] hover:underline">Privacy policy</Link>
         </p>
       </div>
+
+      {/* Profile Completion Prompt */}
+      {showProfilePrompt && (
+        <ProfileCompletionPrompt onComplete={handleProfileComplete} />
+      )}
     </div>
   );
 };
