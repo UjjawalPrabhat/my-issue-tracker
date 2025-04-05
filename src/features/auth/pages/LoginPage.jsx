@@ -42,10 +42,10 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center relative bg-gradient-to-br from-blue-50 to-indigo-50">
-      {/* Hash pattern background - increased opacity and adjusted properties */}
+    <div className="min-h-screen flex items-center justify-center relative bg-gradient-to-br from-gray-50 to-gray-100">
+      {/* Hash pattern background - decreased opacity to make it lighter */}
       <div
-        className="fixed inset-0 opacity-[0.2]"
+        className="fixed inset-0 opacity-[0.15]"
         style={{
           backgroundImage:
             "url(https://ibpublicimages.s3.us-west-2.amazonaws.com/scaler-landing/hash.svg)",
@@ -55,17 +55,17 @@ const LoginPage = () => {
           backgroundPosition: "center",
           pointerEvents: "none",
           zIndex: 1,
-          filter: "contrast(1.2)",
+          filter: "contrast(1.1)",
         }}
       />
 
       {/* Subtle pattern overlay */}
-      <div className="fixed inset-0 opacity-10 z-0 bg-[radial-gradient(#3b82f6_1px,transparent_1px)] bg-[length:20px_20px]"></div>
+      <div className="fixed inset-0 opacity-10 z-0 bg-[radial-gradient(#6B7280_1px,transparent_1px)] bg-[length:20px_20px]"></div>
 
-      {/* Animated gradient blob */}
-      <div className="fixed -bottom-32 -left-40 w-80 h-80 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
-      <div className="fixed top-0 -right-20 w-80 h-80 bg-yellow-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
-      <div className="fixed -bottom-40 right-20 w-80 h-80 bg-pink-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
+      {/* Animated gradient blob - changed to grey */}
+      <div className="fixed -bottom-32 -left-40 w-80 h-80 bg-gray-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+      <div className="fixed top-0 -right-20 w-80 h-80 bg-gray-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+      <div className="fixed -bottom-40 right-20 w-80 h-80 bg-gray-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
 
       {/* Stairs background */}
       <div
@@ -78,12 +78,12 @@ const LoginPage = () => {
           backgroundPosition: "bottom right -300px",
           opacity: 0.12,
           pointerEvents: "none",
-          filter: "contrast(1.1)",
+          filter: "contrast(1.1) grayscale(1)",
         }}
       />
 
       {/* Login Container */}
-      <div className="relative z-10 bg-white/95 backdrop-blur-md p-6 sm:p-10 rounded-2xl shadow-[0_10px_60px_rgba(8,_112,_184,_0.25)] w-full max-w-[440px] mx-auto text-center border border-blue-100/20 transition-all duration-300 hover:shadow-[0_15px_70px_rgba(8,_112,_184,_0.3)]">
+      <div className="relative z-10 bg-white/95 backdrop-blur-md p-6 sm:p-10 rounded-2xl shadow-[0_15px_70px_rgba(107,114,128,0.35)] w-full max-w-[440px] mx-auto text-center border border-gray-100/20 transition-all duration-300 hover:shadow-[0_20px_80px_rgba(79,94,120,0.4)]">
         <div className="inline-block w-[120px] h-[120px] overflow-hidden rounded-2xl mb-6 shadow-md">
           <img
             src="https://media.licdn.com/dms/image/v2/D560BAQE_KykOv-R26Q/company-logo_200_200/company-logo_200_200/0/1680526828612/scaler_school_of_technology_logo?e=2147483647&v=beta&t=ErZSckCyUo-j4_ZwBwkBvdpuP8N7nT8L2O7wPvwA0GY"
@@ -93,11 +93,11 @@ const LoginPage = () => {
         </div>
 
         <h1 className="text-2xl font-bold text-gray-900 mb-2">
-          Welcome Back
+          {`Welcome Back </>`}
         </h1>
 
         <p className="mb-8 text-gray-600 text-sm">
-          Sign in to continue to the Issue Tracker system
+          Sign in to continue
         </p>
 
         {error && (
@@ -120,7 +120,9 @@ const LoginPage = () => {
           <span className="font-medium">
             {loading ? "Signing in..." : "Sign in with Google"}
           </span>
-          <span className="ml-1 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-200">→</span>
+          <span className="ml-1 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-200">
+            →
+          </span>
         </button>
 
         <p className="mt-8 text-xs text-gray-500">
@@ -139,7 +141,7 @@ const LoginPage = () => {
             Privacy policy
           </Link>
         </p>
-        
+
         {/* Version tag */}
         <div className="absolute bottom-3 right-3 text-[10px] text-gray-400">
           v1.0.0

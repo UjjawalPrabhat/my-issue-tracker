@@ -8,7 +8,7 @@ const LandingPage = () => {
     <div className="min-h-screen bg-white relative overflow-hidden flex flex-col">
       {/* Hash pattern background */}
       <div 
-        className="fixed inset-0 opacity-[0.15]"
+        className="fixed inset-0 opacity-[0.1]"
         style={{
           backgroundImage: 'url(https://ibpublicimages.s3.us-west-2.amazonaws.com/scaler-landing/hash.svg)',
           backgroundRepeat: 'repeat',
